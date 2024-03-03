@@ -1,7 +1,7 @@
 from app.models.users_db import Users
 from app import app
 from flask import render_template, redirect, request, abort, session
-from flask_login import LoginManager, login_user, current_user, logout_user
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 import sqlite3
 import base64
 
@@ -18,12 +18,17 @@ def load_user(user_id):
     user_data = cursor.fetchone()
     if user_data:
         name = user_data[1]
-        is_admin = user_data[3]
+        email = user_data[2]
+        username = user_data[3]
+        password = user_data[4]
+        is_admin = user_data[5]
         print("CHEGOU ATÈ AQUI")
         if is_admin == "True":
-            return Users(name=name, trouth=True)
+            return Users(username=username, email=email, name=name,
+                         password=password, trouth=True)
         else:
-            return Users(name=name)
+            return Users(username=username, email=email, name=name,
+                         password=password, trouth=False)
     else:
         print("CHEGOU ATÈ AQUI")
         return None
@@ -47,6 +52,7 @@ def index():
                            ", logged_in=logged_in, posts=posts, img=img)
     return render_template("index.html")
 
+
 @app.route("/login", methods=["GET"])
 def log():
     return render_template("login.html")
@@ -55,17 +61,17 @@ def log():
 @app.route("/verify_login", methods=["POST", "GET"])
 def login():
     if request.method == 'POST':
-        nome = request.form.get("name")
+        username = request.form.get("name")
         senha = request.form.get("senha")
 
         conn = sqlite3.connect('instance\\users.db')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM user WHERE username = ? \
-                    AND password = ?", (nome, senha))
+                    AND password = ?", (username, senha))
         user_data = cursor.fetchone()
 
         if user_data:
-            name, _ = user_data[1], user_data[2]
+            name, _ = user_data[3], user_data[4]
             user = load_user(name)
             login_user(user)
             return redirect("/")
@@ -114,3 +120,13 @@ def teste(id):
     conn.close()
 
     return render_template("test.html", post=post_base64)
+
+
+@app.route("/profile")
+@login_required
+def profile():
+    msg = f"""Nome: {current_user.name} <br>
+Email: {current_user.email}<br>
+Username: {current_user.username}<br>
+Senha: {current_user.password}"""
+    return msg

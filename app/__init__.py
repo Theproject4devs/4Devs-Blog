@@ -11,8 +11,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 
 db = SQLAlchemy(app)
 
+
 from app.controllers import default
 from app.models.users_db import User
+from app.models.postagens import Postagens
 
 
 class MyAdminIndexView(AdminIndexView):
@@ -25,5 +27,6 @@ class MyAdminIndexView(AdminIndexView):
         return super(MyAdminIndexView, self).index()
 
 
-admin = Admin(app, name='Admin', template_mode='bootstrap3', index_view=MyAdminIndexView())
+admin = Admin(app, name='Admin', template_mode='bootstrap3\
+', index_view=MyAdminIndexView())
 admin.add_view(ModelView(User, db.session))
