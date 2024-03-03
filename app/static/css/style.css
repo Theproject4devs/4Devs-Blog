@@ -246,3 +246,24 @@ input:focus {
   width: 300px;
   height: 300px;
 }
+
+.msg-error-login {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+  color: #999;
+  font-size: 14px ;
+  margin: 10px;
+  font-weight: bold;
+  border: 1px solid rosybrown;
+  background-color: #ffe6e6;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 10px;
+  animation: tremor 0.3s ease 0.1s;
+}
+@keyframes tremor {
+  0% { transform: translateX(0);}
+  25% { transform: translateX(-3px);}
+  50% { transform: translateX(3px);}
+  75% { transform: translateX(-3px);}
+  100% { transform: translateX(0);}
+}
