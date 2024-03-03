@@ -5,31 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4DEVS | Login</title>
 
-    <link rel="stylesheet" href="/app/static/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
   <body>
     <div class="login-page">
       <img
-        src="/app/static/img/img-login/vector-restingoffice.svg"
+        src="{{ url_for('static', filename='img/vector-restingoffice.svg') }}"
         alt="Vetor de uma moça com os pés sob a mesa do seu escritório."
       />
       <div class="form-col">
         <h1>Happy to see you, <br />welcome!</h1>
 
-        <form action="" method="">
+        <form action="/verify_login" method="POST">
+          {% if msg %}
+          <p class="msg-error-logubw">{{ msg }}</p>
+          {% endif %}
           <div class="input-wrapper">
             <!-- <label for="name">Name</label> -->
-            <input class="inpt-username" type="text" name="name" id="name" placeholder="Username" />
+            <input
+              class="inpt-username"
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Username"
+            />
             <!-- <label for="password">Password</label> -->
-            <input class="inpt-pass"
+            <input
+              class="inpt-pass"
               type="password"
-              name="password"
+              name="senha"
               id="password"
               placeholder="Password"
             />
           </div>
-
-          
 
           <div class="bttn-wrapper">
             <button class="bttn-resetPassword" type="button">

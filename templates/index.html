@@ -1,0 +1,117 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4Devs - Blog</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=BioRhyme:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header class="main-header">
+      <h1>4<span>DEVS</span></h1>
+
+      <nav class="nav-menu">
+        <ul>
+          <li>
+            <a href="#">Artigos</a>
+          </li>
+          <li>
+            <a href="#">Projetos</a>
+          </li>
+          <li>
+            <a href="#">Equipe</a>
+          </li>
+          <li>
+            <a href="#">História</a>
+          </li>
+        </ul>
+      </nav>
+      {% if logged_in %}
+      <button id="logoutButton" class="bttn-acess">Logout</button>
+      {% else %}
+      <a href="/login"><button class="bttn-acess">Acessar</button></a>
+      {% endif %}
+    </header>
+    <h1>POSTS</h1>
+    {%for post in posts%}
+    <h2>{{ post["titulo"] }}</h2>
+    <p>{{ post["descricao"] }}</p>
+    <img
+      src="data:image/jpeg;base64,{{ img }}"
+      alt="Imagem do Post"
+      class="img-teste"
+    />
+    {%endfor%}
+    <script>
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", function () {
+          // Envia uma solicitação POST assíncrona para a rota de logout
+          fetch("/logout", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          setTimeout(function () {
+            location.reload()
+          }, 500)
+        })
+    </script>
+  </body>
+</html>
+=======
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4Devs - Blog</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=BioRhyme:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/app/static/css/style.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <h1>4<span>DEVS</span></h1>
+
+      <nav class="nav-menu">
+        <ul>
+          <li>
+            <a href="#">Artigos</a>
+          </li>
+          <li>
+            <a href="#">Projetos</a>
+          </li>
+          <li>
+            <a href="#">Equipe</a>
+          </li>
+          <li>
+            <a href="#">História</a>
+          </li>
+        </ul>
+      </nav>
+
+      <a href="login.html"><button class="bttn-acess">Acessar</button></a>
+    </header>
+  </body>
+</html>
+>>>>>>> d8140d2f159665b7d8c8fd7666a5ce01d55332f1

@@ -241,3 +241,8 @@ input:focus {
   color: #4d4d4d;
 }
 /* end - login.html/login acess */
+
+.img-post {
+  width: 300px;
+  height: 300px;
+}
