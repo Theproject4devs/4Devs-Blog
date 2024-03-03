@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Post</title>
+  </head>
+  <body>
+    <div class="post">
+      {% if post %}
+      <h1>{{ post[0] }}</h1>
+      <!-- Título do post -->
+      <p>{{ post[1] }}</p>
+      <!-- Texto do post -->
+      <img src="data:image/jpeg;base64,{{ post[2] }}" alt="Imagem do Post" />
+      {% else %}
+      <p>Post não encontrado.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>
