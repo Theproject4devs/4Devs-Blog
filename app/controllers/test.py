@@ -24,28 +24,39 @@ import sqlite3
 
 # ///////////////////////////// INSERINDO IMAGENS ////////////////////////////
 
-def inserir_imgs(path_img, titulo, descricao, file_db):
-    conn = sqlite3.connect(file_db)
-    cursor = conn.cursor()
+# def inserir_imgs(path_img, titulo, descricao, file_db):
+#     conn = sqlite3.connect(file_db)
+#     cursor = conn.cursor()
 
-    cursor.execute("""CREATE TABLE IF NOT EXISTS posts (
-                   id INTEGER PRIMARY KEY,
-                   titulo TEXT,
-                   descricao TEXT,
-                   imgs BLOB
-                   )""")
+#     cursor.execute("""CREATE TABLE IF NOT EXISTS posts (
+#                    id INTEGER PRIMARY KEY,
+#                    titulo TEXT,
+#                    descricao TEXT,
+#                    imgs BLOB
+#                    )""")
 
-    with open(path_img, 'rb') as file:
-        img_bytes = file.read()
+#     with open(path_img, 'rb') as file:
+#         img_bytes = file.read()
 
-    cursor.execute("""INSERT INTO posts (titulo, descricao, imgs\
-                   ) VALUES (?, ?, ?)\
-                   """, (titulo, descricao, sqlite3.Binary(img_bytes),))
-    conn.commit()
-    conn.close()
+#     cursor.execute("""INSERT INTO posts (titulo, descricao, imgs\
+#                    ) VALUES (?, ?, ?)\
+#                    """, (titulo, descricao, sqlite3.Binary(img_bytes),))
+#     conn.commit()
+#     conn.close()
 
 
-inserir_imgs(path_img="app\\controllers\\cipolas.jpg\
-             ", file_db="instance\\posts.db", titulo="Rennan\
-                ", descricao="Agora é o rennan que da\
-                     o bumbum na delfia")
+# inserir_imgs(path_img="app\\controllers\\cipolas.jpg\
+#              ", file_db="instance\\posts.db", titulo="Rennan\
+#                 ", descricao="Agora é o rennan que da\
+#                      o bumbum na delfia")
+
+conn = sqlite3.connect("instance\\posts.db")
+cursor = conn.cursor()
+
+id_para_excluir = 3
+
+# Executar a instrução SQL DELETE
+cursor.execute("DELETE FROM posts WHERE id = ?", (id_para_excluir,))
+
+conn.commit()
+conn.close()

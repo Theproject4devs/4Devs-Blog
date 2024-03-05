@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Postagem de Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/teste.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <h1>Novo Post</h1>
+            <form action="/submit_post" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" name="titulo" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="conteudo">Conteúdo</label>
+                    <textarea id="conteudo" name="conteudo" rows="8" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="imagem">Imagem ou Vídeo</label>
+                    <div class="file-input">
+                        <input type="file" id="imagem" name="imagem-video" accept="image/*,video/*" onchange="updateFileName(this)">
+                        <label for="imagem" class="file-label">Escolha um arquivo (apenas imagens e vídeos)</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit">Publicar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function updateFileName(input) {
+            const fileName = input.files[0].name;
+            const label = input.nextElementSibling;
+            label.textContent = fileName;
+        }
+
+        function validateForm() {
+            const fileInput = document.getElementById('imagem');
+            if (fileInput.files.length === 0) {
+                alert('Por favor, selecione um arquivo.');
+                return false;
+            }
+
+            const validFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/quicktime'];
+            const fileType = fileInput.files[0].type;
+            if (!validFileTypes.includes(fileType)) {
+                alert('Por favor, selecione um arquivo de imagem ou vídeo.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

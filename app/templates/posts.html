@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postagens</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/posts.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='img/img-posts/number-four-icon.svg') }}" alt="Logo 4 devs">
+    </header>
+    <main class="main">
+        <div class="newpost">
+            <div class="infouser">
+                <div class="imguser"></div>
+                {% if nome %}
+                <strong>{{nome}}</strong>
+                {% else %}
+                <strong>Fazer Login</strong>
+                {% endif %}
+
+            <!-- Formulário de Postagem -->
+            </div>
+            <form action="" class="formpost">
+                <textarea name="textarea" placeholder="" id="textarea"></textarea>
+                <div class="iconsandbutton">
+                    <div class="icons">
+                        <label for="foto-video" id="fotos-videos"><img src="{{ url_for('static', filename='img/img-posts/photos-icon.svg') }}" alt="Adicionar uma imagem" width="20px"></label>
+                        <input type="file" name="foto-video" id="foto-video" accept="image/*" onchange="previewImage()">
+                        <button type="button" class="btnfileform"comment></button><img src="{{ url_for('static', filename='img/img-posts/video-818.svg') }}" alt="Adicionar uma imagem" width="20px"></button>
+                        <button type="button" class="btnfileform"share></button><img src="{{ url_for('static', filename='img/img-posts/keyboard-svgrepo-com.svg') }}" alt="Adicionar um comentário" width="20px"></button>
+                    </div>
+                    <button type="submit" class="btnsubmitform">Publicar</button>
+                </div>
+            </form>
+        </div>
+        <ul class="posts">
+            <li class="post">
+                <div class="infouserpost">
+                    <div class="imguserpost"></div>
+                    <div class="nameandhour">
+                        <strong>Rennan Reliquia</strong>
+                        <p>21hr</p>
+                    </div>
+                </div>
+                <p>O Lorem Ipsum é um texto modelo da indústria tipográfica e de impressão. O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres de um texto para criar um espécime de livro. Este texto não só sobreviveu 5 séculos, mas também o salto para a tipografia electrónica, mantendo-se essencialmente inalterada. Foi popularizada nos anos 60 com a disponibilização das folhas de Letraset,</p>
+                <div class="actionbtnpost">
+                    <button type="button" class="filepost" id="like"><img src="{{ url_for('static', filename='img/img-posts/heart-icon.svg') }}" alt="Curtir" width="10px">Curtir</button>
+                    <button type="button" class="filepost" id="comment"><img src="{{ url_for('static', filename='img/img-posts/more-options-ellipsis-icon.svg') }}" alt="Comentar" width="10px">Comentar</button>
+                    <button type="button" class="filepost" id="share"><img src="{{ url_for('static', filename='img/img-posts/share-icon.svg') }}" alt="Compartilhar" width="10px">Compartilhar</button>
+                </div>
+            </li>
+            <li class="post">
+                <div class="infouserpost">
+                    <div class="imguserpost"></div>
+                    <div class="nameandhour">
+                        <strong>Rennan Reliquia</strong>
+                        <p>21hr</p>
+                    </div>
+                </div>
+                <p>O Lorem Ipsum é um texto modelo da indústria tipográfica e de impressão. O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres de um texto para criar um espécime de livro. Este texto não só sobreviveu 5 séculos, mas também o salto para a tipografia electrónica, mantendo-se essencialmente inalterada. Foi popularizada nos anos 60 com a disponibilização das folhas de Letraset,</p>
+                <div class="actionbtnpost">
+                    <button type="button" class="filepost" id="like"><img src="{{ url_for('static', filename='img/img-posts/heart-icon.svg') }}" alt="Curtir" width="10px">Curtir</button>
+                    <button type="button" class="filepost" id="comment"><img src="{{ url_for('static', filename='img/img-posts/more-options-ellipsis-icon.svg') }}" alt="Comentar" width="10px">Comentar</button>
+                    <button type="button" class="filepost" id="share"><img src="{{ url_for('static', filename='img/img-posts/share-icon.svg') }}" alt="Compartilhar" width="10px">Compartilhar</button>
+                </div>
+            </li>
+            <li class="post">
+                <div class="infouserpost">
+                    <div class="imguserpost"></div>
+                    <div class="nameandhour">
+                        <strong>Rennan Reliquia</strong>
+                        <p>21hr</p>
+                    </div>
+                </div>
+                <p>O Lorem Ipsum é um texto modelo da indústria tipográfica e de impressão. O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres de um texto para criar um espécime de livro. Este texto não só sobreviveu 5 séculos, mas também o salto para a tipografia electrónica, mantendo-se essencialmente inalterada. Foi popularizada nos anos 60 com a disponibilização das folhas de Letraset,</p>
+                <div class="actionbtnpost">
+                    <button type="button" class="filepost" id="like"><img src="{{ url_for('static', filename='img/img-posts/heart-icon.svg') }}" alt="Curtir" width="10px">Curtir</button>
+                    <button type="button" class="filepost" id="comment"><img src="{{ url_for('static', filename='img/img-posts/more-options-ellipsis-icon.svg') }}" alt="Comentar" width="10px">Comentar</button>
+                    <button type="button" class="filepost" id="share"><img src="{{ url_for('static', filename='img/img-posts/share-icon.svg') }}" alt="Compartilhar" width="10px">Compartilhar</button>
+                </div>
+            </li>
+        </ul>
+    </main>
+    <script>
+        function previewImage() {
+            const fileInput = document.getElementById('foto-video');
+            const textarea = document.getElementById('textarea');
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                // Exibe a imagem na textarea
+                textarea.value += `<img src="${reader.result}" alt="Image">`;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>

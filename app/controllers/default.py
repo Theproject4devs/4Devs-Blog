@@ -4,6 +4,7 @@ from flask import render_template, redirect, request, abort, session
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 import sqlite3
 import base64
+import re
 
 
 login_manager = LoginManager(app)
@@ -102,23 +103,30 @@ def obter_dados_imagem(id_imagem):
 
 
 @app.route("/posts/<id>")
-def teste(id):
-    conn = sqlite3.connect("instance\\posts.db")
-    cursor = conn.cursor()
+@app.route("/posts/make")
+def teste(id: str | None = None):
+    if id:
+        conn = sqlite3.connect("instance\\posts.db")
+        cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM posts WHERE id = ?", (id))
-    post = cursor.fetchone()
-    if post:
-        id, titulo, descricao, imagem = post
-        imagem_base64 = base64.b64encode(imagem).decode('utf-8')
-        post_base64 = (titulo, descricao, imagem_base64)
+        cursor.execute("SELECT * FROM posts WHERE id = ?", (id))
+        post = cursor.fetchone()
+        if post:
+            id, titulo, descricao, imagem = post
+            imagem_base64 = base64.b64encode(imagem).decode('utf-8')
+            post_base64 = (titulo, descricao, imagem_base64)
 
-    else:
-        post_base64 = None
+        else:
+            post_base64 = None
 
-    conn.close()
+            conn.close()
 
-    return render_template("test.html", post=post_base64)
+        return render_template("test.html", post=post_base64)
+    try:
+        name = current_user.name
+        return render_template("posts.html", name=name)
+    except AttributeError:
+        return render_template("teste.html")
 
 
 @app.route("/profile")
@@ -149,3 +157,44 @@ def register():
     conn.close()
     
     return render_template("login.html")
+
+@app.route("/make_post")
+def make_post():
+    return render_template("make_post.html")
+
+def inserir_imgs(path_img, titulo, descricao, file_db):
+    conn = sqlite3.connect(file_db)
+    cursor = conn.cursor()
+
+    # with open(path_img, 'rb') as file:
+    #     img_bytes = file.read()
+
+    cursor.execute("""INSERT INTO posts (titulo, descricao, imgs\
+                   ) VALUES (?, ?, ?)\
+                   """, (titulo, descricao, sqlite3.Binary(path_img),))
+    conn.commit()
+    conn.close()
+
+def filtrar_nome_arquivo(nome_arquivo):
+    return re.sub(r'\W+', ' ', nome_arquivo)
+
+@app.route("/submit_post", methods=["POST"])
+def submit_post():
+    titulo = request.form.get("titulo")
+    descricao = request.form.get("conteudo")
+    input_ = request.files.get("imagem-video")
+    
+    titulo_filtrado = filtrar_nome_arquivo(titulo)
+    descricao_filtrado = filtrar_nome_arquivo(descricao)
+    
+    if input_:
+        img_bytes = input_.read()
+    
+
+    inserir_imgs(path_img=img_bytes, titulo=titulo_filtrado, descricao=descricao_filtrado, file_db="instance\\posts.db")
+    return redirect("/")
+
+@app.route("/postssss")
+def postssss():
+    nome = current_user.name
+    return render_template("posts.html", nome=nome)
