@@ -74,7 +74,6 @@
       document
         .getElementById("logoutButton")
         .addEventListener("click", function () {
-          // Envia uma solicitação POST assíncrona para a rota de logout
           fetch("/logout", {
             method: "POST",
             headers: {

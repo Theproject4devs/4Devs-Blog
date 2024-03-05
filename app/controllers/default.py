@@ -34,23 +34,22 @@ def load_user(user_id):
         return None
 
 
-def get_db_connection():
-    conn = sqlite3.connect('instance\\imgs.db')
+def get_db_connection(path_db):
+    conn = sqlite3.connect(f'instance\\{path_db}')
     conn.row_factory = sqlite3.Row
     return conn
 
 
 @app.route("/")
 def index():
-    conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM images').fetchall()
+    conn = get_db_connection("posts.db")
+    posts = conn.execute('SELECT * FROM posts').fetchall()
     for post in posts:
         img = base64.b64encode(post["imgs"]).decode('utf-8')
     conn.close()
     logged_in = current_user.is_authenticated
     return render_template("index.html\
                            ", logged_in=logged_in, posts=posts, img=img)
-    return render_template("index.html")
 
 
 @app.route("/login", methods=["GET"])
@@ -83,7 +82,7 @@ def login():
         return abort(404)
 
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["POST", "GET"])
 def logout():
     session.clear()
     logout_user()
@@ -91,9 +90,9 @@ def logout():
 
 
 def obter_dados_imagem(id_imagem):
-    conn = sqlite3.connect('instance\\imgs.db')
+    conn = sqlite3.connect('instance\\posts.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM images WHERE id = ?", (id_imagem))
+    cursor.execute("SELECT * FROM posts WHERE id = ?", (id_imagem))
     imagem = cursor.fetchone()
     conn.close()
     if imagem:
@@ -102,12 +101,12 @@ def obter_dados_imagem(id_imagem):
         return None
 
 
-@app.route("/teste/<id>")
+@app.route("/posts/<id>")
 def teste(id):
-    conn = sqlite3.connect("instance\\imgs.db")
+    conn = sqlite3.connect("instance\\posts.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM images WHERE id = ?", (id))
+    cursor.execute("SELECT * FROM posts WHERE id = ?", (id))
     post = cursor.fetchone()
     if post:
         id, titulo, descricao, imagem = post
@@ -130,3 +129,23 @@ Email: {current_user.email}<br>
 Username: {current_user.username}<br>
 Senha: {current_user.password}"""
     return msg
+
+
+@app.route("/register", methods=["POST"])
+def register():
+    name_register = request.form.get("name-register")
+    username_register = request.form.get("username-register")
+    email_register = request.form.get("email-register")
+    password_register = request.form.get("senha-register")
+    
+    conn = get_db_connection("users.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("INSERT INTO user (name, email, username, password, is_admin)\
+        VALUES (?, ?, ?, ?, False)", (name_register, email_register, 
+                                      username_register, password_register))
+    
+    conn.commit()
+    conn.close()
+    
+    return render_template("login.html")

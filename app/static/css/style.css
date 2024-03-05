@@ -152,7 +152,7 @@ button {
   justify-content: center;
 }
 
-.form-col {
+.form-signin {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -160,12 +160,22 @@ button {
   padding: 0 10.5rem;
 }
 
-.form-col h1 {
+.form-signup {
+  align-items: center;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 10.5rem;
+}
+
+
+.form-signin h1, .form-signup h1 {
   font-size: 3rem;
   margin-bottom: 7rem;
 }
 
-.form-col form {
+
+.form-signin form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -184,15 +194,16 @@ button {
   padding: 0.7rem;
 }
 
-.inpt-username::placeholder {
-  background-image: url(/app/static/img/img-login/ico-username.svg);
+
+.form-signin .inpt-username::placeholder {
+  background-image: url("../img/img-login/ico-username.svg" );
   background-repeat: no-repeat;
   background-position: center right;
   padding-right: 0.7rem;
 }
 
-.inpt-pass::placeholder {
-  background-image: url(/app/static/img/img-login/ico-password.svg);
+.form-signin .inpt-pass::placeholder {
+  background-image: url(../img/img-login/ico-password.svg);
   background-repeat: no-repeat;
   background-position: center right;
   padding-right: 0.7rem;
@@ -217,7 +228,7 @@ input:focus {
   text-decoration: underline;
 }
 
-.bttn-login {
+.bttn-signin, .bttn-signup {
   background: #732c94;
   border-radius: 0.3rem;
   color: #fff;
@@ -241,6 +252,12 @@ input:focus {
   color: #4d4d4d;
 }
 /* end - login.html/login acess */
+
+/* login.html/login register */
+.bttns-form {
+  text-align: center;
+}
+
 
 .img-post {
   width: 300px;

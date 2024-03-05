@@ -9,6 +9,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+
   </head>
   <body>
     <div class="login-page">
@@ -16,7 +17,7 @@
         src="{{ url_for('static', filename='img/vector-restingoffice.svg') }}"
         alt="Vetor de uma moça com os pés sob a mesa do seu escritório."
       />
-      <div class="form-col">
+      <div id="fncSignin" class="form-signin">
         <h1>Happy to see you, <br />welcome!</h1>
 
         <form action="/verify_login" method="POST">
@@ -48,13 +49,61 @@
             </button>
           </div>
 
-          <button class="bttn-login" type="submit">Login</button>
+          <button class="bttn-signin" type="submit">Login</button>
         </form>
         <div class="register-user">
           <p>Don't have an account yet?</p>
-          <a href="#">Register Now</a>
+          <button class="bttn-register" type="button" onclick="toggleDisplaySignUp()">Register Now</button>
         </div>
       </div>
+
+      <div id="fncSignup" class="form-signup">
+        <h1>New here? <br> Let's get started</h1>
+
+        <form action="/register" method="post">
+          <div class="input-wrapper">
+            <!-- <label for="name">Name</label> -->
+            <input
+            class="inpt-full-name"
+            type="text"
+            name="name-register"
+            id="register-fullName"
+            placeholder="Enter your Full Name"
+          />
+            <!-- <label for="name">Name</label> -->
+            <input
+              class="inpt-username"
+              type="text"
+              name="username-register"
+              id="register-name"
+              placeholder="Enter your Username"
+            />
+            <!-- <label for="name">Name</label> -->
+            <input
+            class="inpt-email"
+            type="text"
+            name="email-register"
+            id="register-email"
+            placeholder="Enter your E-mail"
+          />
+            <!-- <label for="password">Password</label> -->
+            <input
+              class="inpt-pass"
+              type="password"
+              name="senha-register"
+              id="register-password"
+              placeholder="Enter your Password"
+            />
+          </div>
+
+          <div class="bttns-form">
+            <button class="return-login" type="button" onclick="toggleDisplaySignIn()">Sign In</button>
+            <button class="bttn-signup" type="submit">Sign up</button>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>
 </html>
