@@ -136,7 +136,7 @@ def register():
     name_register = request.form.get("name-register")
     username_register = request.form.get("username-register")
     email_register = request.form.get("email-register")
-    password_register = request.form.get("senha-register")
+    password_register = request.form.get("register-password")
     
     conn = get_db_connection("users.db")
     cursor = conn.cursor()
