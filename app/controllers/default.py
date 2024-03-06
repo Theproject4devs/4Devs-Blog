@@ -45,12 +45,13 @@ def get_db_connection(path_db):
 def index():
     conn = get_db_connection("posts.db")
     posts = conn.execute('SELECT * FROM posts').fetchall()
+    img_data =[]
     for post in posts:
-        img = base64.b64encode(post["imgs"]).decode('utf-8')
+        img_data.append(base64.b64encode(post["imgs"]).decode('utf-8'))
     conn.close()
     logged_in = current_user.is_authenticated
     return render_template("index.html\
-                           ", logged_in=logged_in, posts=posts, img=img)
+                           ", logged_in=logged_in, posts=posts, img_data=img_data)
 
 
 @app.route("/login", methods=["GET"])

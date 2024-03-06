@@ -49,26 +49,26 @@
       </aside>
 
       <main class="post-list">
-        {%for post in posts%}
-        <article class="post-container">
-          <img src="data:image/jpeg;base64,{{ img }}" alt="" class="img-post" />
-          <div class="post-preview">
-            <h1>{{ post["titulo"] }}</h1>
-
-            <div class="description-article">
-              <p>{{ post["descricao"] }}</p>
-              <footer>
-                <div>
-                  <time datetime="2024-03-01">1 de Mar. de 2024</time>
-                  <span>• 15 min</span>
+        {% for i in range(posts|length) %}
+            <article class="post-container">
+                <img src="data:image/jpeg;base64,{{ img_data[i] }}" alt="" class="img-post" />
+                <div class="post-preview">
+                    <h1>{{ posts[i]["titulo"] }}</h1>
+                    <div class="description-article">
+                        <p>{{ posts[i]["descricao"] }}</p>
+                        <footer>
+                            <div>
+                                <time datetime="2024-03-01">1 de Mar. de 2024</time>
+                                <span>• 15 min</span>
+                            </div>
+                            <button>Ler mais</button>
+                        </footer>
+                    </div>
                 </div>
-                <button>Ler mais</button>
-              </footer>
-            </div>
-          </div>
-        </article>
-        {%endfor%}
-      </main>
+            </article>
+        {% endfor %}
+    </main>
+    
     </div>
     <script>
       document
