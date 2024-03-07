@@ -114,7 +114,7 @@ def obter_dados_imagem(id_imagem):
         return None
 
 
-@app.route("/posts/<id>")
+
 @app.route("/posts/make")
 def teste(id: str | None = None):
     if id:
@@ -231,6 +231,32 @@ def search():
         return render_template("index.html", msgerro="Nada Encontrado")
     
     
-@app.route("/see_more")
-def see_more():
-    ...
+def get_post_details(post_id):
+    conn = get_db_connection("posts.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM posts WHERE id=?",(post_id,))
+    post = cursor.fetchone()    
+    conn.close()
+    return post
+
+
+@app.route('/posts/<int:post_id>')
+def post_details(post_id):
+    # Aqui você pode usar o ID do post para recuperar os detalhes do post do banco de dados
+    # e passá-los para o seu template de detalhes do post
+    post = get_post_details(post_id)  # Supondo que você tenha uma função para obter os detalhes do post
+
+    titulo = post[1]
+    descricao = post[2]
+    img_data = (base64.b64encode(post[3]).decode('utf-8'))
+    created_at = post[4]
+    try:
+        return render_template("lermais.html", post=post, titulo=titulo, descricao=descricao,
+                               img_data=img_data, created_at=created_at
+                               ,nome=current_user.name, 
+                               calculate_time_since_creation=calculate_time_since_creation)
+    except:
+        return render_template("lermais.html", post=post, titulo=titulo, descricao=descricao,
+                               img_data=img_data, created_at=created_at,
+                               calculate_time_since_creation=calculate_time_since_creation)

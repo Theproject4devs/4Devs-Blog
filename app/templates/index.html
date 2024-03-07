@@ -105,9 +105,9 @@
                             <span>{{ hours }}h atrás</span>
                             {% endif %}
                         </div>
-                        <form action="/see_more" method="get">
-                            <button type="submit">Ler mais</button>
-                        </form>
+                        <form action="{{ url_for('post_details', post_id=posts[i]['id']) }}" method="get">
+                          <button type="submit">Ler mais</button>
+                      </form>
                         </footer>
                     </div>
                 </div>

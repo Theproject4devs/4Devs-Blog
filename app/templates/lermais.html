@@ -26,20 +26,31 @@
                 <strong>Fazer Login</strong>
                 {% endif %}
 
-            <!-- Formulário de Postagem -->
-            </div>
-            <form action="" class="formpost">
-                <textarea name="textarea" placeholder="" id="textarea"></textarea>
-                <div class="iconsandbutton">
-                    <div class="icons">
-                        <label for="foto-video" id="fotos-videos"><img src="{{ url_for('static', filename='img/img-posts/photos-icon.svg') }}" alt="Adicionar uma imagem" width="20px"></label>
-                        <input type="file" name="foto-video" id="foto-video" accept="image/*" onchange="previewImage()">
-                        <button type="button" class="btnfileform"comment></button><img src="{{ url_for('static', filename='img/img-posts/video-818.svg') }}" alt="Adicionar uma imagem" width="20px"></button>
-                        <button type="button" class="btnfileform"share></button><img src="{{ url_for('static', filename='img/img-posts/keyboard-svgrepo-com.svg') }}" alt="Adicionar um comentário" width="20px"></button>
+                {% if post %}
+                <article class="post-container">
+                    <img src="data:image/jpeg;base64,{{ img_data }}" alt="" class="img-post" />
+                    <div class="post-preview">
+                        <h1>{{ titulo }}</h1>
+                        <div class="description-article">
+                            <p>{{ descricao }}</p>
+                            <footer>
+                              <div>
+                                {% set hours, minutes, days = calculate_time_since_creation( created_at ) %}
+                                {% if days > 0 %}
+                                <time datetime="{{ created_at }}">{{ created_at }}</time>
+                                <span>{{ days }}d atrás</span>
+                                {% elif hours == 0%}
+                                <span>{{ minutes }}min atrás</span>
+                                {% else %}
+                                <span>{{ hours }}h atrás</span>
+                                {% endif %}
+                            </div>
+                            </footer>
+                        </div>
                     </div>
-                    <button type="submit" class="btnsubmitform">Publicar</button>
-                </div>
-            </form>
+                </article>
+                {% endif %}
+            </div>
         </div>
         <ul class="posts">
             <li class="post">
