@@ -5,6 +5,7 @@ from flask_login import LoginManager, login_user, current_user, logout_user, log
 import sqlite3
 import base64
 import re
+from datetime import datetime
 
 
 login_manager = LoginManager(app)
@@ -169,10 +170,10 @@ def inserir_imgs(path_img, titulo, descricao, file_db):
 
     # with open(path_img, 'rb') as file:
     #     img_bytes = file.read()
-
+    date = datetime.now().strftime('%d/%m/%Y %H:%M')
     cursor.execute("""INSERT INTO posts (titulo, descricao, imgs\
-                   ) VALUES (?, ?, ?)\
-                   """, (titulo, descricao, sqlite3.Binary(path_img),))
+                   , created_at) VALUES (?, ?, ?, ?)\
+                   """, (titulo, descricao, sqlite3.Binary(path_img), date,))
     conn.commit()
     conn.close()
 
