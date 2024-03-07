@@ -57,10 +57,18 @@
                     <div class="description-article">
                         <p>{{ posts[i]["descricao"] }}</p>
                         <footer>
-                            <div>
-                                <time datetime="2024-03-01">{{ posts[i]["created_at"] }}</time>
-                                <span></span>
-                            </div>
+                          <div>
+                            {% set hours, minutes, days = calculate_time_since_creation(posts[i]["created_at"]) %}
+                            {% if days > 0 %}
+                            <time datetime="{{ posts[i]["created_at"] }}">{{ posts[i]["created_at"] }}</time>
+                            <span>{{ days }}d atrás</span>
+                            {% elif hours == 0%}
+                            <span>{{ minutes }}min atrás</span>
+                            {% else %}
+                            <span>{{ hours }}h atrás</span>
+                            {% endif %}
+
+                        </div>
                             <button>Ler mais</button>
                         </footer>
                     </div>

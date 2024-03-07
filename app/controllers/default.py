@@ -41,6 +41,15 @@ def get_db_connection(path_db):
     conn.row_factory = sqlite3.Row
     return conn
 
+def calculate_time_since_creation(created_at):
+    created_at_datetime = datetime.strptime(created_at, '%d/%m/%Y %H:%M')
+    current_datetime = datetime.now()
+    difference = current_datetime - created_at_datetime
+    days = difference.days
+    hours = difference.seconds // 3600
+    minutes = (difference.seconds % 3600) // 60
+    return hours, minutes, days
+
 
 @app.route("/")
 def index():
@@ -52,7 +61,8 @@ def index():
     conn.close()
     logged_in = current_user.is_authenticated
     return render_template("index.html\
-                           ", logged_in=logged_in, posts=posts, img_data=img_data)
+                           ", logged_in=logged_in, posts=posts, img_data=img_data,
+                           calculate_time_since_creation=calculate_time_since_creation)
 
 
 @app.route("/login", methods=["GET"])
@@ -177,6 +187,7 @@ def inserir_imgs(path_img, titulo, descricao, file_db):
     conn.commit()
     conn.close()
 
+
 def filtrar_nome_arquivo(nome_arquivo):
     return re.sub(r'\W+', ' ', nome_arquivo)
 
@@ -195,7 +206,6 @@ def submit_post():
 
     inserir_imgs(path_img=img_bytes, titulo=titulo_filtrado, descricao=descricao_filtrado, file_db="instance\\posts.db")
     return redirect("/")
-
 @app.route("/postssss")
 def postssss():
     nome = current_user.name
