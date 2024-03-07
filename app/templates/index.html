@@ -45,10 +45,47 @@
 
     <div class="main-container">
       <aside>
-        <input type="search" placeholder="Busque por algo" name="#" id="#" />
+        <form action="/search" method="get">
+        <input type="text" name="query" placeholder="Pesquisar...">
+        <button type="submit">Buscar</button>
+      </form>
       </aside>
 
       <main class="post-list">
+        {% if msgerro %}
+        <h1>{{ msgerro }}</h1>
+        {% endif %}
+
+        {% if results%}
+        <h1 style="color: white;">Results:</h1>
+        <ul>
+          {% for i in range(results|length) %}
+          <article class="post-container">
+            <img src="data:image/jpeg;base64,{{ img_data[i] }}" alt="" class="img-post" />
+            <div class="post-preview">
+                <h1>{{ results[i]["titulo"] }}</h1>
+                <div class="description-article">
+                    <p>{{ results[i]["descricao"] }}</p>
+                    <footer>
+                      <div>
+                        {% set hours, minutes, days = calculate_time_since_creation(results[i]["created_at"]) %}
+                        {% if days > 0 %}
+                        <time datetime="{{ results[i]["created_at"] }}">{{ results[i]["created_at"] }}</time>
+                        <span>{{ days }}d atrás</span>
+                        {% elif hours == 0%}
+                        <span>{{ minutes }}min atrás</span>
+                        {% else %}
+                        <span>{{ hours }}h atrás</span>
+                        {% endif %}
+                    </div>
+                        <button>Ler mais</button>
+                    </footer>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+        {% endif %}
+
         {% for i in range(posts|length) %}
             <article class="post-container">
                 <img src="data:image/jpeg;base64,{{ img_data[i] }}" alt="" class="img-post" />
@@ -67,9 +104,10 @@
                             {% else %}
                             <span>{{ hours }}h atrás</span>
                             {% endif %}
-
                         </div>
-                            <button>Ler mais</button>
+                        <form action="/see_more" method="get">
+                            <button type="submit">Ler mais</button>
+                        </form>
                         </footer>
                     </div>
                 </div>

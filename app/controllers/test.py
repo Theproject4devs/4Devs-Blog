@@ -53,10 +53,11 @@ import sqlite3
 # conn = sqlite3.connect("instance\\posts.db")
 # cursor = conn.cursor()
 
-# id_para_excluir = 1
+# id_para_excluir = 6
 
 # # Executar a instrução SQL DELETE
-# cursor.execute("DELETE FROM posts WHERE id = ?", (id_para_excluir,))
+# for i in range (id_para_excluir):
+#     cursor.execute("DELETE FROM posts WHERE id = ?", (i,))
 
 # conn.commit()
 # conn.close()

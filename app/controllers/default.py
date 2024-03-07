@@ -206,7 +206,31 @@ def submit_post():
 
     inserir_imgs(path_img=img_bytes, titulo=titulo_filtrado, descricao=descricao_filtrado, file_db="instance\\posts.db")
     return redirect("/")
-@app.route("/postssss")
-def postssss():
-    nome = current_user.name
-    return render_template("posts.html", nome=nome)
+
+@app.route('/search')
+def search():
+    query = request.args.get('query')
+    
+    conn = get_db_connection("posts.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM posts WHERE titulo LIKE ? OR descricao LIKE ?", ('%' + query + '%', '%' + query + '%'))
+    search_results = cursor.fetchall()
+    img_data = []
+    for result in search_results:
+        img_data.append(base64.b64encode(result["imgs"]).decode('utf-8'))
+    conn.close()
+    
+    if query == "":
+        return redirect("/")
+    
+    elif search_results:
+        return render_template('index.html', query=query, results=search_results, img_data=img_data,
+                                calculate_time_since_creation=calculate_time_since_creation)
+
+    else:
+        return render_template("index.html", msgerro="Nada Encontrado")
+    
+    
+@app.route("/see_more")
+def see_more():
+    ...
